@@ -6,9 +6,9 @@ import useHttp from '../../hooks/http.hook.js';
 import './Table.scss';
 
 const names = [
-  {value:'name',label:'name'},
-  {value:'amount',label:'amount'},
-  {value:'distance',label:'distance'}
+  {value:'name',label:'имя'},
+  {value:'amount',label:'количество'},
+  {value:'distance',label:'дистанция'}
 ]
 const signs = [
   {value:'>',label:'>'},
@@ -16,9 +16,10 @@ const signs = [
   {value:'=',label:'='}
 ]
 
-const Table = () => {
+const TableCard = () => {
 
   const { request } = useHttp();
+  // eslint-disable-next-line no-unused-vars
   const [tableArray, setTableArray] = useState([]);
   const [sortedArray, setSortedArray] = useState([]);
   const [sortState, setSortState] = useState({
@@ -30,6 +31,7 @@ const Table = () => {
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
       setTableArray(result);
+      setSortedArray(result);
     });
   },[])
 
@@ -54,7 +56,30 @@ const Table = () => {
   }
 
   const handlerSort = () => {
-    console.log('inside handlerSort');
+    const actualArrayState = Object.assign([],tableArray);
+    const actualSortState = {...sortState};
+    const { name, sign, value} = actualSortState; 
+
+    const sortedResult = actualArrayState.filter((elem) => {
+      if (name==='name') {
+        if (sign==='<' && elem[name] < value) {
+          return elem;  
+        } else if(sign==='>' && elem[name] > value) {
+          return elem;
+        } else if(sign==='=' && elem[name] === value){
+          return elem
+        }
+      } else {
+        if (sign==='<' && elem[name] < Number(value)) {
+          return elem;  
+        } else if(sign==='>' && elem[name] > Number(value)) {
+          return elem;
+        } else if(sign==='=' && elem[name] === Number(value)){
+          return elem
+        }
+      }
+    });
+    setSortedArray(sortedResult);
   }
 
   return (
@@ -98,10 +123,24 @@ const Table = () => {
               Данные из БД
             </th>
           </tr>
+          <tr>
+            <th>
+              Дата
+            </th>
+            <th>
+              Имя
+            </th>
+            <th>
+              Количество
+            </th>
+            <th>
+              Дистанция
+            </th>
+          </tr>
         </thead>
         <tbody>
           {
-            tableArray?.map((elem) => {
+            sortedArray?.map((elem) => {
               return (
                 <tr className="distance-card__row" key={elem.id}>
                   <td className="distance-card__row-elem">
@@ -126,4 +165,4 @@ const Table = () => {
   )
 };
 
-export default Table;
+export default TableCard;
