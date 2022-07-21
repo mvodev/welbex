@@ -23,23 +23,31 @@ const TableCard = () => {
   // eslint-disable-next-line no-unused-vars
   const [tableArray, setTableArray] = useState([]);
   const [sortedArray, setSortedArray] = useState([]);
+  const [activePage, setActivePage] = useState(1);
   const [sortState, setSortState] = useState({
     name:'',
     sign:'',
     value:''
   });
   const [totalElems,setTotalElems] = useState(0);
+  const [ paginationState, setPaginationState ] = useState([]);
 
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
       setTableArray(result);
       setSortedArray(result);
-      setTotalElems(result.length)
+      setTotalElems(result.length);
+      const totalPaginationsPages = Math.ceil(result.length / 10);
+      const paginatedArray = [];
+      for (let i=0; i< totalPaginationsPages; i++){
+        paginatedArray.push(result.slice( (i*10), (i*10+10)))
+      }
+      setPaginationState(paginatedArray);
     });
   },[])
 
   const handlerPagination = (clickedPageNumber)=>{
-    console.log(clickedPageNumber);
+    setActivePage(clickedPageNumber);
   }
 
   const pagination = 
@@ -47,7 +55,6 @@ const TableCard = () => {
     && 
     <Pagination 
       totalAmount={totalElems} 
-      elemsOnPage={10}
       callback={handlerPagination} 
     />
 
@@ -157,7 +164,7 @@ const TableCard = () => {
         </thead>
         <tbody>
           {
-            sortedArray?.map((elem) => {
+            paginationState[activePage-1]?.map((elem) => {
               return (
                 <tr className="distance-card__row" key={elem.id}>
                   <td className="distance-card__row-elem">

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import './Pagination.scss';
 
 const Pagination = (props) => {
-  const {callback, totalAmount, elemsOnPage} = props;
-  const totalPaginations = Math.ceil(totalAmount / elemsOnPage);
+  const {callback, totalAmount } = props;
+  const totalPaginations = Math.ceil(totalAmount / 10);
   let paginationsArray = [];
 
   for ( let i=0; i<totalPaginations; i++ ){
