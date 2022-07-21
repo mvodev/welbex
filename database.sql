@@ -1,0 +1,4 @@
+CREATE DATABASE distance;
+
+CREATE TABLE distancetable(id SERIAL PRIMARY KEY,date TIMESTAMP,name VARCHAR(255),amount BIGINT,distance BIGINT);
+
