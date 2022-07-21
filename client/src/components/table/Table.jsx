@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 import useHttp from '../../hooks/http.hook.js';
+import Pagination from '../pagination/Pagination.jsx';
 
 import './Table.scss';
 
@@ -27,13 +28,28 @@ const TableCard = () => {
     sign:'',
     value:''
   });
+  const [totalElems,setTotalElems] = useState(0);
 
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
       setTableArray(result);
       setSortedArray(result);
+      setTotalElems(result.length)
     });
   },[])
+
+  const handlerPagination = (clickedPageNumber)=>{
+    console.log(clickedPageNumber);
+  }
+
+  const pagination = 
+    totalElems > 0 
+    && 
+    <Pagination 
+      totalAmount={totalElems} 
+      elemsOnPage={10}
+      callback={handlerPagination} 
+    />
 
   const handlerGhangeInput = (type,data) => {
     let actualSortState = {...sortState};
@@ -162,6 +178,7 @@ const TableCard = () => {
           }
         </tbody>
       </table>
+      {pagination}
     </div>
   )
 };
