@@ -13,6 +13,10 @@
     cursor: pointer;
   }
 
+  &__number_is_active {
+    background-color: rgb(51, 53, 55)
+  }
+
   &__number:hover {
     background-color: rgba(21, 61, 111, 0.90);
   }
