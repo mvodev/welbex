@@ -50,6 +50,21 @@ git clone https://github.com/mvodev/welbex.git
 npm i
 ```
 
+### Установка БД
+Для работы необходима установка PostgreSQL(https://www.postgresql.org/),
+установка пароля qwerty для пользователя postgres и создание базы данных под названием
+distance
+
+```bash
+const pool = new Pool({
+  user: 'postgres',
+  password: 'qwerty',
+  host: 'localhost',
+  port: 5432,
+  database: 'distance',
+});
+```
+
 ### Запуск
 
 Запуск скриптов:
@@ -63,3 +78,4 @@ Script-names:
 - client - запуск клиента на localhost:3000;
 - start - запуск сервера на порту 5000;
 - dev - запуск клиента и сервера в режиме разработки
+
