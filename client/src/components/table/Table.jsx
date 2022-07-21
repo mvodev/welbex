@@ -59,27 +59,28 @@ const TableCard = () => {
     const actualArrayState = Object.assign([],tableArray);
     const actualSortState = {...sortState};
     const { name, sign, value} = actualSortState; 
-
-    const sortedResult = actualArrayState.filter((elem) => {
-      if (name==='name') {
-        if (sign==='<' && elem[name] < value) {
-          return elem;  
-        } else if(sign==='>' && elem[name] > value) {
-          return elem;
-        } else if(sign==='=' && elem[name] === value){
-          return elem
+    if (name &&  sign && value) {
+      const sortedResult = actualArrayState.filter((elem) => {
+        if (name==='name') {
+          if (sign==='<' && elem[name] < value) {
+            return elem;  
+          } else if(sign==='>' && elem[name] > value) {
+            return elem;
+          } else if(sign==='=' && elem[name] === value){
+            return elem
+          }
+        } else {
+          if (sign==='<' && elem[name] < Number(value)) {
+            return elem;  
+          } else if(sign==='>' && elem[name] > Number(value)) {
+            return elem;
+          } else if(sign==='=' && elem[name] === Number(value)){
+            return elem
+          }
         }
-      } else {
-        if (sign==='<' && elem[name] < Number(value)) {
-          return elem;  
-        } else if(sign==='>' && elem[name] > Number(value)) {
-          return elem;
-        } else if(sign==='=' && elem[name] === Number(value)){
-          return elem
-        }
-      }
-    });
-    setSortedArray(sortedResult);
+      });
+      setSortedArray(sortedResult);
+    }
   }
 
   return (
@@ -144,7 +145,7 @@ const TableCard = () => {
               return (
                 <tr className="distance-card__row" key={elem.id}>
                   <td className="distance-card__row-elem">
-                    {elem.date}
+                    {new Date(elem.date).toLocaleString('ru-RU').slice(0,10)}
                   </td>
                   <td className="distance-card__row-elem">
                     {elem.name}
