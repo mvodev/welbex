@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    margin-top: 5px;
     gap: 10px;
 
     &-input {
@@ -41,5 +42,9 @@
 
   &__sort-button:hover {
     background-color: rgba(21, 61, 111, 0.90);
+  }
+
+  .pagination {
+    margin-top: 10px;
   }
 }

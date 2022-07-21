@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  &__number {
+    width: 30px;
+    height: 30px;
+    color: black;
+    background-color: rgb(80, 144, 234);
+    border: none;
+    border-radius: 4px;
+  }
+
+  &__number:hover {
+    background-color: rgba(21, 61, 111, 0.90);
+  }
+}
