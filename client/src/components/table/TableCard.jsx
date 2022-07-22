@@ -4,7 +4,7 @@ import Select from 'react-select';
 import useHttp from '../../hooks/http.hook.js';
 import Pagination from '../pagination/Pagination.jsx';
 
-import './Table.scss';
+import './TableCard.scss';
 
 const names = [
   {value:'name',label:'имя'},
@@ -44,6 +44,7 @@ const TableCard = () => {
       }
       setPaginationState(paginatedArray);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   const handlerPagination = (clickedPageNumber)=>{
@@ -85,11 +86,11 @@ const TableCard = () => {
     if (name &&  sign && value) {
       const sortedResult = actualArrayState.filter((elem) => {
         if (name==='name') {
-          if (sign==='<' && elem[name] < value) {
+          if (sign === '<' && elem[name] < value) {
             return elem;  
-          } else if(sign==='>' && elem[name] > value) {
+          } else if(sign === '>' && elem[name] > value) {
             return elem;
-          } else if(sign==='=' && elem[name] === value){
+          } else if(sign === '=' && elem[name] === value){
             return elem
           }
         } else {

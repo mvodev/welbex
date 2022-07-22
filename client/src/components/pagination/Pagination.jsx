@@ -10,7 +10,6 @@ const Pagination = (props) => {
     const activePage = Number(event.target.innerText);
     const tempArray = [];
     for ( let i=0; i < totalPaginations; i++ ){
-      console.log((i+1)===activePage)
       tempArray.push(
         <button 
           onPointerDown={(event) => {

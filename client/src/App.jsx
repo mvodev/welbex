@@ -1,6 +1,6 @@
 import './App.scss';
 import AddData from './components/addData/AddData';
-import TableCard from './components/table/Table';
+import TableCard from './components/table/TableCard';
 
 const App = () => {
   return (
