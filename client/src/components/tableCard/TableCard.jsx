@@ -26,13 +26,13 @@ const TableCard = () => {
     sign:'',
     value:''
   });
-  const [ page, setPage ] = useState(null);
+  const [ table, setTable ] = useState(null);
 
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
       setTableArrayFromDB(result);
       const pageToChange = <Table tableArray={result}/>;
-      setPage(pageToChange);
+      setTable(pageToChange);
     });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +85,7 @@ const TableCard = () => {
         }
       });
       const pageToChange = <Table tableArray={sortedResult}/>;
-      setPage(pageToChange);
+      setTable(pageToChange);
     }
   }
 
@@ -123,7 +123,7 @@ const TableCard = () => {
           value="Сортировать" 
         />
       </div>
-      {page}
+      {table}
     </div>
   )
 };
