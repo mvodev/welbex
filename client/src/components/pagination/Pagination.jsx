@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
+
 import './Pagination.scss';
 
 const Pagination = (props) => {
+  const { totalElements } = { ...useSelector((state) => state.tableCardReducer) };
+  console.log(totalElements);
   const {callback, totalAmount } = props;
-  const [totalPaginations] =useState(Math.ceil(totalAmount / 10));
+  const [totalPaginations, setTotalPaginations ] =useState(Math.ceil(totalElements / 10));
   const [paginationsArray,setPaginationsArray] = useState([]);
 
   const handlerClickOnPagination = (event) => {
@@ -31,6 +35,8 @@ const Pagination = (props) => {
   }
 
   useState(() => {
+    setTotalPaginations(Math.ceil(totalElements / 10))
+    console.log('inside useeffect' + totalElements)
     const tempArray = [];
     for ( let i=0; i<totalPaginations; i++ ){
       tempArray.push(
@@ -47,7 +53,7 @@ const Pagination = (props) => {
       )
     }
     setPaginationsArray(tempArray);
-  },[])
+  },[totalElements,totalPaginations])
 
   return (
     <div className="pagination">

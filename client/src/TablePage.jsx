@@ -1,8 +1,8 @@
-import './App.scss';
+import './TablePage.scss';
 import AddData from './components/addData/AddData';
 import TableCard from './components/table/TableCard';
 
-const App = () => {
+const TablePage = () => {
   return (
     <main className="app">
       <h1 className="app__header">Тестовое приложение для WelbeX</h1>
@@ -12,4 +12,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default TablePage;

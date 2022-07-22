@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { useDispatch, useSelector } from "react-redux";
 
 import useHttp from '../../hooks/http.hook.js';
 import Pagination from '../pagination/Pagination.jsx';
 
 import './TableCard.scss';
+import setTotalPages from '../../store/tableCard/tableCardActions.js';
 
 const names = [
   {value:'name',label:'имя'},
@@ -31,6 +33,8 @@ const TableCard = () => {
   });
   const [totalElems,setTotalElems] = useState(0);
   const [ paginationState, setPaginationState ] = useState([]);
+  const [renderPagination,setRenderPagination] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
@@ -49,15 +53,15 @@ const TableCard = () => {
 
   const handlerPagination = (clickedPageNumber)=>{
     setActivePage(clickedPageNumber);
+    dispatch({type:'SET_TOTAL_PAGES',payload:78});
   }
 
-  const pagination = 
-    totalElems > 0 
-    && 
-    <Pagination 
-      totalAmount={totalElems} 
-      callback={handlerPagination} 
-    />
+  const pagination = (totalElems > 0 && renderPagination)
+  ?<Pagination 
+    totalAmount={totalElems} 
+    callback={handlerPagination} 
+  />
+  : null;
 
   const handlerGhangeInput = (type,data) => {
     let actualSortState = {...sortState};
