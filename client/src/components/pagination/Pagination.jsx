@@ -4,13 +4,13 @@ import './Pagination.scss';
 
 const Pagination = (props) => {
   const {callback, totalAmount } = props;
-  const [totalPaginations, setTotalPaginations ] =useState(Math.ceil(totalAmount / 10));
+  const [totalPaginationPages, setTotalPaginationPages ] =useState(Math.ceil(totalAmount / 10));
   const [paginationsArray,setPaginationsArray] = useState([]);
 
   useEffect(()=>{
-    setTotalPaginations(Math.ceil(totalAmount/10));
+    setTotalPaginationPages(Math.ceil(totalAmount/10));
     const tempArray = [];
-    for ( let i=0; i<totalPaginations; i++ ){
+    for ( let i=0; i<totalPaginationPages; i++ ){
       tempArray.push(
         <button 
           onPointerDown={(event) => {
@@ -31,7 +31,7 @@ const Pagination = (props) => {
   const handlerClickOnPagination = (event) => {
     const activePage = Number(event.target.innerText);
     const tempArray = [];
-    for ( let i=0; i < totalPaginations; i++ ){
+    for ( let i=0; i < totalPaginationPages; i++ ){
       tempArray.push(
         <button 
           onPointerDown={(event) => {
@@ -54,7 +54,7 @@ const Pagination = (props) => {
 
   useEffect(() => {
     const tempArray = [];
-    for ( let i=0; i<totalPaginations; i++ ){
+    for ( let i=0; i<totalPaginationPages; i++ ){
       tempArray.push(
         <button 
           onPointerDown={(event) => {
@@ -70,7 +70,7 @@ const Pagination = (props) => {
     }
     setPaginationsArray(tempArray);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[totalPaginations])
+  },[totalPaginationPages])
 
   return (
     <div className="pagination">

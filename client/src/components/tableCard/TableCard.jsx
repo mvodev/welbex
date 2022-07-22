@@ -17,15 +17,17 @@ const signs = [
   {value:'=',label:'='}
 ]
 
+const initialSortState = {
+  name:'',
+  sign:'',
+  value:''
+};
+
 const TableCard = () => {
 
   const { request } = useHttp();
   const [tableArrayFromDB, setTableArrayFromDB] = useState([]);
-  const [sortState, setSortState] = useState({
-    name:'',
-    sign:'',
-    value:''
-  });
+  const [sortState, setSortState] = useState(initialSortState);
   const [ table, setTable ] = useState(null);
 
   useEffect(()=>{
@@ -56,7 +58,6 @@ const TableCard = () => {
         default:
           break;
       }
-      setSortState(actualSortState);
   }
 
   const handlerSort = () => {
@@ -71,7 +72,7 @@ const TableCard = () => {
             return elem;  
           } else if(sign === '>' && elem[name] > value) {
             return elem;
-          } else if(sign === '=' && elem[name] === value){
+          } else if(sign === '=' && elem[name] === value) {
             return elem
           }
         } else {
@@ -87,6 +88,13 @@ const TableCard = () => {
       const pageToChange = <Table tableArray={sortedResult}/>;
       setTable(pageToChange);
     }
+  }
+
+  const handlerCancelSort = () => {
+    const actualArrayState = Object.assign([],tableArrayFromDB);
+    setSortState(initialSortState);
+    const pageToChange = <Table tableArray={actualArrayState}/>;
+    setTable(pageToChange);
   }
 
   return (
@@ -121,6 +129,12 @@ const TableCard = () => {
           type="button" 
           onPointerDown={handlerSort}
           value="Сортировать" 
+        />
+        <input 
+          className="distance-card__sort-button" 
+          type="button" 
+          onPointerDown={handlerCancelSort}
+          value="Сбросить сортировку" 
         />
       </div>
       {table}
