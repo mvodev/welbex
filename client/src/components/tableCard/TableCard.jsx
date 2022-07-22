@@ -128,13 +128,13 @@ const TableCard = () => {
           className="distance-card__sort-button" 
           type="button" 
           onPointerDown={handlerSort}
-          value="Сортировать" 
+          value="Фильтровать" 
         />
         <input 
           className="distance-card__sort-button" 
           type="button" 
           onPointerDown={handlerCancelSort}
-          value="Сбросить сортировку" 
+          value="Сбросить фильтр" 
         />
       </div>
       {table}
