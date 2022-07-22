@@ -3,9 +3,7 @@ const router = Router();
 const pool = require('../db');
 
 router.post('/distance/add',async (req,res) => {
-  console.log('inside router');
   try {
-    console.log(req.body)
     const { message } = req.body;
     const validDataInRequest = 
       message 

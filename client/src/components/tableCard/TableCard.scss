@@ -1,0 +1,52 @@
+.distance-card{
+  margin: 0 auto;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+  &__sort-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    gap: 10px;
+  }
+
+  &__sort-input {
+    width: 80px;
+    border-radius: 4px;
+    border: 1px solid hsl(0, 0%, 80%);
+    padding-left: 8px;
+  }
+
+  &__row-elem {
+    border: 1px solid gray;
+    height: 30px;
+    padding: 5px;
+    color: black;
+  }
+
+  &__header{
+    font-size: 2rem;
+    color: black;
+  }
+
+  &__sort-button {
+    background-color: rgb(80, 144, 234);
+    border: none;
+    border-radius: 4px;
+    height: 38px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &__sort-button:hover {
+    background-color: rgba(21, 61, 111, 0.90);
+  }
+
+  .pagination {
+    margin-top: 10px;
+  }
+}

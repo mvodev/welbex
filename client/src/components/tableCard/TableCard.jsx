@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { useDispatch, useSelector } from "react-redux";
 
 import useHttp from '../../hooks/http.hook.js';
-import Pagination from '../pagination/Pagination.jsx';
+import Table from '../table/Table';
 
 import './TableCard.scss';
-import setTotalPages from '../../store/tableCard/tableCardActions.js';
 
 const names = [
   {value:'name',label:'имя'},
@@ -22,46 +20,23 @@ const signs = [
 const TableCard = () => {
 
   const { request } = useHttp();
-  // eslint-disable-next-line no-unused-vars
-  const [tableArray, setTableArray] = useState([]);
-  const [sortedArray, setSortedArray] = useState([]);
-  const [activePage, setActivePage] = useState(1);
+  const [tableArrayFromDB, setTableArrayFromDB] = useState([]);
   const [sortState, setSortState] = useState({
     name:'',
     sign:'',
     value:''
   });
-  const [totalElems,setTotalElems] = useState(0);
-  const [ paginationState, setPaginationState ] = useState([]);
-  const [renderPagination,setRenderPagination] = useState(true);
-  const dispatch = useDispatch();
+  const [ page, setPage ] = useState(null);
 
   useEffect(()=>{
     request('http://localhost:5000/distance').then((result)=>{
-      setTableArray(result);
-      setSortedArray(result);
-      setTotalElems(result.length);
-      const totalPaginationsPages = Math.ceil(result.length / 10);
-      const paginatedArray = [];
-      for (let i=0; i< totalPaginationsPages; i++){
-        paginatedArray.push(result.slice( (i*10), (i*10+10)))
-      }
-      setPaginationState(paginatedArray);
+      setTableArrayFromDB(result);
+      const pageToChange = <Table tableArray={result}/>;
+      setPage(pageToChange);
     });
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
-  const handlerPagination = (clickedPageNumber)=>{
-    setActivePage(clickedPageNumber);
-    dispatch({type:'SET_TOTAL_PAGES',payload:78});
-  }
-
-  const pagination = (totalElems > 0 && renderPagination)
-  ?<Pagination 
-    totalAmount={totalElems} 
-    callback={handlerPagination} 
-  />
-  : null;
 
   const handlerGhangeInput = (type,data) => {
     let actualSortState = {...sortState};
@@ -81,13 +56,15 @@ const TableCard = () => {
         default:
           break;
       }
+      setSortState(actualSortState);
   }
 
   const handlerSort = () => {
-    const actualArrayState = Object.assign([],tableArray);
+    const actualArrayState = Object.assign([],tableArrayFromDB);
     const actualSortState = {...sortState};
     const { name, sign, value} = actualSortState; 
     if (name &&  sign && value) {
+      // eslint-disable-next-line array-callback-return
       const sortedResult = actualArrayState.filter((elem) => {
         if (name==='name') {
           if (sign === '<' && elem[name] < value) {
@@ -107,7 +84,8 @@ const TableCard = () => {
           }
         }
       });
-      setSortedArray(sortedResult);
+      const pageToChange = <Table tableArray={sortedResult}/>;
+      setPage(pageToChange);
     }
   }
 
@@ -145,52 +123,7 @@ const TableCard = () => {
           value="Сортировать" 
         />
       </div>
-      <table className="distance-card__table">
-        <thead>
-          <tr>
-            <th className="distance-card__header" colSpan={4}>
-              Данные из БД
-            </th>
-          </tr>
-          <tr>
-            <th>
-              Дата
-            </th>
-            <th>
-              Имя
-            </th>
-            <th>
-              Количество
-            </th>
-            <th>
-              Дистанция
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            paginationState[activePage-1]?.map((elem) => {
-              return (
-                <tr className="distance-card__row" key={elem.id}>
-                  <td className="distance-card__row-elem">
-                    {new Date(elem.date).toLocaleString('ru-RU').slice(0,10)}
-                  </td>
-                  <td className="distance-card__row-elem">
-                    {elem.name}
-                  </td>
-                  <td className="distance-card__row-elem">
-                    {elem.amount}
-                  </td>
-                  <td className="distance-card__row-elem">
-                    {elem.distance}
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
-      {pagination}
+      {page}
     </div>
   )
 };

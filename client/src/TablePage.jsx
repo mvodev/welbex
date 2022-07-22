@@ -1,6 +1,6 @@
-import './TablePage.scss';
 import AddData from './components/addData/AddData';
-import TableCard from './components/table/TableCard';
+import TableCard from './components/tableCard/TableCard';
+import './TablePage.scss';
 
 const TablePage = () => {
   return (
