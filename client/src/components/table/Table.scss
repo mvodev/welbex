@@ -1,4 +1,4 @@
-.distance-card{
+.distance{
   margin: 0 auto;
   border: 1px solid gray;
   display: flex;
@@ -48,5 +48,11 @@
 
   .pagination {
     margin-top: 10px;
+  }
+}
+
+@media(max-width:350px){
+  .distance{
+    padding: 5px;
   }
 }

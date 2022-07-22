@@ -6,6 +6,10 @@
   align-items: center;
   padding: 10px;
 
+  &__sort{
+    margin-bottom: 10px;
+  }
+
   &__sort-wrapper {
     display: flex;
     flex-direction: row;
@@ -48,5 +52,11 @@
 
   .pagination {
     margin-top: 10px;
+  }
+}
+
+@media (max-width:350px){
+  .distance-card{
+    padding: 0;
   }
 }

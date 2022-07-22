@@ -31,11 +31,11 @@ const Table = (props) => {
   }
 
   return (
-    <div className="distance-card">
-      <table className="distance-card__table">
+    <div className="distance">
+      <table className="distance__table">
         <thead>
           <tr>
-            <th className="distance-card__header" colSpan={4}>
+            <th className="distance__header" colSpan={4}>
               Данные из БД
             </th>
           </tr>
@@ -58,17 +58,17 @@ const Table = (props) => {
           {
             paginationState[activePage-1]?.map((elem) => {
               return (
-                <tr className="distance-card__row" key={elem.id}>
-                  <td className="distance-card__row-elem">
+                <tr className="distance__row" key={elem.id}>
+                  <td className="distance__row-elem">
                     {new Date(elem.date).toLocaleString('ru-RU').slice(0,10)}
                   </td>
-                  <td className="distance-card__row-elem">
+                  <td className="distance__row-elem">
                     {elem.name}
                   </td>
-                  <td className="distance-card__row-elem">
+                  <td className="distance__row-elem">
                     {elem.amount}
                   </td>
-                  <td className="distance-card__row-elem">
+                  <td className="distance__row-elem">
                     {elem.distance}
                   </td>
                 </tr>
